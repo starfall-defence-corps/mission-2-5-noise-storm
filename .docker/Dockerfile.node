@@ -1,0 +1,73 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV container=docker
+
+# Install systemd + SSH + fleet services the cadet will harden/operate.
+#   nginx    — the fleet web service (the noise storm fuzzes port 80)
+#   fleet2ban/rsyslog/iptables — the defensive tooling, present but NOT
+#   configured. A zero-work fleet is wide open; the cadet does the hardening.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    systemd \
+    systemd-sysv \
+    openssh-server \
+    python3 \
+    python3-apt \
+    sudo \
+    iproute2 \
+    procps \
+    nginx \
+    fail2ban \
+    rsyslog \
+    iptables \
+    && rm -rf /var/lib/apt/lists/*
+
+# Mask unnecessary systemd units that cause issues in containers
+RUN systemctl mask \
+    dev-hugepages.mount \
+    sys-fs-fuse-connections.mount \
+    systemd-udev-trigger.service \
+    systemd-udevd.service \
+    systemd-update-utmp.service \
+    getty@.service \
+    getty.target
+
+# Base services the fleet ships with, running from boot.
+RUN systemctl enable ssh \
+    && systemctl enable nginx \
+    && systemctl enable rsyslog
+
+# Defensive tooling is present but DORMANT — the cadet activates and tunes it.
+# (Ubuntu's fail2ban ships an enabled sshd jail; we disable the service so a
+#  zero-work fleet stays undefended and the noise storm keeps landing.)
+RUN systemctl disable fail2ban
+
+# === THE NOISE STORM'S OPENING ===
+# The fleet's SSH daemon accepts passwords AND enumerates its auth methods to
+# anyone who knocks. That is exactly what the storm is probing for. Key-only
+# auth is the cadet's first countermeasure.
+RUN mkdir -p /run/sshd \
+    && sed -i 's/#\?PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config \
+    && sed -i 's/#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config \
+    && sed -i 's/#\?PubkeyAuthentication.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config \
+    && sed -i 's/#\?KbdInteractiveAuthentication.*/KbdInteractiveAuthentication no/' /etc/ssh/sshd_config
+
+# Create cadet user for SSH access
+RUN useradd -m -s /bin/bash cadet \
+    && echo 'cadet:academy' | chpasswd \
+    && echo 'cadet ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/cadet \
+    && chmod 0440 /etc/sudoers.d/cadet
+
+# Set up SSH key auth for cadet (key is bind-mounted read-only at runtime)
+RUN mkdir -p /home/cadet/.ssh \
+    && chmod 700 /home/cadet/.ssh \
+    && chown cadet:cadet /home/cadet/.ssh
+
+# A default landing page so the fleet web service answers on port 80.
+RUN echo '<h1>Starfall Defence Corps — Fleet Node</h1>' > /var/www/html/index.html
+
+EXPOSE 22 80
+
+STOPSIGNAL SIGRTMIN+3
+
+CMD ["/sbin/init"]

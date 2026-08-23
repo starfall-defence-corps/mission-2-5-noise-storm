@@ -1,0 +1,17 @@
+# Phase 1 — Key-Only Auth
+# ------------------------
+# The fleet's sshd still accepts passwords. Turn it off so the storm can never
+# guess its way in, then make sure sshd actually reloads the new config.
+#
+# TODO:
+#   - Set PasswordAuthentication no (and consider KbdInteractiveAuthentication no)
+#     in the sshd configuration.
+#   - Keep PubkeyAuthentication yes — your cadet key must keep working!
+#   - Restart/reload ssh so the change takes effect.
+#
+# Tip: a drop-in file under /etc/ssh/sshd_config.d/ is cleaner than editing the
+# main config, and a handler is the idiomatic way to reload on change.
+
+- name: TODO — harden sshd to key-only auth
+  ansible.builtin.debug:
+    msg: "Replace me: disable password auth and reload sshd."

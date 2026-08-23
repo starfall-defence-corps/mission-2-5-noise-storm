@@ -1,0 +1,16 @@
+# Phase 3 — See the Storm (log forwarding half)
+# ---------------------------------------------
+# The SOC wants every node's logs in one place. Configure rsyslog on each node
+# to forward to the collector at sdc-app (172.30.0.11).
+#
+# TODO:
+#   - Drop an rsyslog forwarding rule (e.g. a file in /etc/rsyslog.d/) that sends
+#     logs to the collector, for example:  *.*  @@172.30.0.11:514
+#     (@@ = TCP, @ = UDP — either is accepted.)
+#   - Restart/reload rsyslog so it picks up the rule.
+#
+# The other half of Phase 3 — the triage report — lives in collect-triage.yml.
+
+- name: TODO — forward fleet logs to the SOC collector
+  ansible.builtin.debug:
+    msg: "Replace me: add an rsyslog forward rule and reload rsyslog."

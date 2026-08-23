@@ -1,0 +1,14 @@
+# site.yml — your fleet-hardening entry point.
+#
+# Apply the whole defensive posture in one run:
+#     ansible-playbook site.yml
+#
+# The roles below are scaffolds. Fill in their tasks/main.yml as you work
+# through docs/EXERCISES.md. Each role targets the whole fleet.
+- name: Weather the noise storm
+  hosts: fleet
+  become: true
+  roles:
+    - hardening       # Phase 1 — key-only SSH
+    - defense         # Phase 2 — rate-limit / ban the storm
+    - observability   # Phase 3 — forward logs to the SOC

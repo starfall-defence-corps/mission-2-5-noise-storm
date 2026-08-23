@@ -1,0 +1,18 @@
+# Phase 2 — Rate-Limit & Ban
+# --------------------------
+# Key-only auth stopped the storm getting in, but it keeps knocking. Stand up a
+# ban so repeated probes get dropped at the TCP level.
+#
+# TODO:
+#   - Ensure fail2ban is installed (it ships on the fleet, just dormant).
+#   - Configure an sshd jail tuned to trip FAST and ban LONG, e.g.:
+#         maxretry = 3, findtime = 30s, bantime = 600s
+#     (drop a jail.local / jail.d file — do not edit jail.conf directly).
+#   - Enable and start the fail2ban service, and reload it on config change.
+#
+# ARIA grades the OUTCOME (the storm's SSH probes stop landing), not your exact
+# numbers — but if the jail is too lax it will not trip inside the test window.
+
+- name: TODO — enable and tune a fail2ban sshd jail
+  ansible.builtin.debug:
+    msg: "Replace me: configure, enable, and start fail2ban."
