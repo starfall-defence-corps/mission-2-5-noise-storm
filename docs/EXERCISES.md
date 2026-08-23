@@ -1,5 +1,5 @@
 ---
-CLASSIFICATION: ENSIGN EYES ONLY
+CLASSIFICATION: LIEUTENANT EYES ONLY
 MISSION: 2.5 — NOISE STORM
 DOCUMENT: EXERCISES — Phase-by-Phase Operational Instructions
 ---
@@ -340,4 +340,4 @@ If any item is incomplete, return to the corresponding phase and complete it bef
 
 ---
 
-*SDC Cyber Command — 2187 — ENSIGN EYES ONLY*
+*SDC Cyber Command — 2187 — LIEUTENANT EYES ONLY*
