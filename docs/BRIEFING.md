@@ -1,5 +1,5 @@
 ---
-CLASSIFICATION: ENSIGN EYES ONLY
+CLASSIFICATION: LIEUTENANT EYES ONLY
 MISSION: 2.5 — NOISE STORM
 THEATRE: Starfall Defence Corps Academy
 AUTHORITY: SDC Cyber Command, 2187
@@ -92,7 +92,7 @@ Run `make test` after each phase. Note that `make test` exercises **all five pha
 
 If ARIA ever reports the range as offline or inconclusive, this is not a failed phase — the Storm's container has stalled. Run `make reset` and try again.
 
-Consulting **HINTS.md** is authorised at Ensign rank. Using available intelligence is not weakness — it is doctrine.
+Consulting **HINTS.md** is authorised at Lieutenant rank. Using available intelligence is not weakness — it is doctrine.
 
 ---
 
@@ -106,4 +106,4 @@ Proceed to **EXERCISES.md** for phase-by-phase operational instructions.
 
 ---
 
-*SDC Cyber Command — 2187 — ENSIGN EYES ONLY*
+*SDC Cyber Command — 2187 — LIEUTENANT EYES ONLY*
