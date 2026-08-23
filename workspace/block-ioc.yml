@@ -1,0 +1,25 @@
+# block-ioc.yml — firewall-drop a single IOC across the whole fleet.
+#
+# Run:  ansible-playbook block-ioc.yml -e ioc_ip=172.30.0.20
+#
+# ARIA runs THIS playbook against the storm's live source IP in Phase 4, and
+# again against a ROTATED source IP in Phase 5. It must be parameterised on
+# ioc_ip — a hardcoded address will pass Phase 4 and fail Phase 5.
+- name: Block an IOC fleet-wide
+  hosts: fleet
+  become: true
+  tasks:
+    - name: Require an IOC to block
+      ansible.builtin.assert:
+        that:
+          - ioc_ip is defined
+          - ioc_ip | length > 0
+        fail_msg: "Pass the IOC to block, e.g. -e ioc_ip=172.30.0.20"
+
+    # TODO: drop ALL traffic from ioc_ip on every node — not just port 22.
+    # A port-22 ban (fail2ban) does not stop the web fuzzing; this must.
+    # Hint: ansible.builtin.iptables — chain: INPUT, source: "{{ ioc_ip }}",
+    #       jump: DROP  (make it idempotent).
+    - name: TODO — drop the IOC's traffic
+      ansible.builtin.debug:
+        msg: "Replace me: firewall-DROP all traffic from {{ ioc_ip }}."

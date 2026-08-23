@@ -1,0 +1,22 @@
+# sdc-noise — the "noise storm" range infrastructure.
+# A plain (non-systemd) container running one bounded supervisor loop.
+# It is opaque attacker simulation: cadets never read or edit it.
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssh-client \
+    curl \
+    iproute2 \
+    netcat-openbsd \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/noise /run/noise
+
+COPY noise-runner.sh /opt/noise/noise-runner.sh
+COPY noise-wordlist.txt /opt/noise/wordlist.txt
+RUN chmod +x /opt/noise/noise-runner.sh
+
+ENTRYPOINT ["/opt/noise/noise-runner.sh"]

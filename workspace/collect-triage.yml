@@ -1,0 +1,22 @@
+# collect-triage.yml — gather the storm's fingerprints and render a report.
+#
+# Run:     ansible-playbook collect-triage.yml
+# Output:  reports/noise-report.md   (ARIA reads this in Phase 3)
+#
+# The report must name the storm's CURRENT source IP — and the only way to know
+# it is to look at the live fleet. Do not hand-write the address.
+- name: Triage the noise storm
+  hosts: fleet
+  become: true
+  tasks:
+    # TODO: gather each node's SSH auth log and tally the source IPs of the
+    # failed / invalid login attempts. The busiest address is your prime suspect.
+    # Hint: /var/log/auth.log holds lines like
+    #   "Invalid user baduser from 172.30.0.20 port 41122 ..."
+    - name: TODO — gather offender evidence from the fleet
+      ansible.builtin.debug:
+        msg: "Replace me: collect and tally SSH offenders from auth.log."
+
+    # TODO: render templates/noise-report.md.j2 into reports/noise-report.md,
+    # using the evidence you gathered. Render once, on the control node:
+    #   delegate_to: localhost   run_once: true   become: false
