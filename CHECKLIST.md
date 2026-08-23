@@ -1,6 +1,6 @@
 # Mission 2.5: Noise Storm — Progress Tracker
 
-**Rank**: Ensign
+**Rank**: Lieutenant
 **Arc**: Incident Response — Act 1 of 2 (Act 2 is Mission 2.6: Counterattack)
 
 Check each item off as you complete it. Run `make test` after each phase — it

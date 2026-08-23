@@ -1,6 +1,6 @@
 # Mission 2.5: Noise Storm — Hints & Troubleshooting Guide
 
-**Rank**: Ensign (Reduced Scaffolding)
+**Rank**: Lieutenant (Reduced Scaffolding)
 
 This guide is your safety net. If something is not working, the answer is likely here. Read the relevant section carefully before asking for help.
 
