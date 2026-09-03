@@ -64,6 +64,7 @@ source venv/bin/activate
 |  | sdc-app    |  | sdc-web    |  | sdc-db     |   (you defend)  |
 |  | .11  :2221 |  | .12  :2222 |  | .13  :2223 |                 |
 |  +------------+  +------------+  +------------+                 |
+|  all three nodes also serve HTTP on :80; sdc-web is primary web  |
 |                                                               |
 |  +-------------------------------+   range infrastructure      |
 |  | sdc-noise  .20 (rotates .21)  |   (opaque — never touch it) |
@@ -85,9 +86,9 @@ make setup      Start the fleet + range (comes up under attack)
 make test       Ask ARIA to verify your work (runs all 5 phases)
 make reset      Destroy, rebuild, and re-arm the storm (fresh scored run)
 make destroy    Tear down everything (containers, keys, venv, range state)
-make ssh-app    SSH into sdc-app  (172.30.0.11)
-make ssh-web    SSH into sdc-web  (172.30.0.12, runs nginx)
-make ssh-db     SSH into sdc-db   (172.30.0.13)
+make ssh-app    SSH into sdc-app  (172.30.0.11, also runs nginx :80)
+make ssh-web    SSH into sdc-web  (172.30.0.12, primary web node, nginx :80)
+make ssh-db     SSH into sdc-db   (172.30.0.13, also runs nginx :80)
 make submit     Submit your work for ARIA review (branch, commit, push, PR)
 ```
 
