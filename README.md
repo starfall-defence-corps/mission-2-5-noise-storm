@@ -64,7 +64,7 @@ source venv/bin/activate
 |  | sdc-app    |  | sdc-web    |  | sdc-db     |   (you defend)  |
 |  | .11  :2221 |  | .12  :2222 |  | .13  :2223 |                 |
 |  +------------+  +------------+  +------------+                 |
-|  all three nodes also serve HTTP on :80; sdc-web is primary web  |
+|  all three nodes also serve HTTP on :80; sdc-web is primary web |
 |                                                               |
 |  +-------------------------------+   range infrastructure      |
 |  | sdc-noise  .20 (rotates .21)  |   (opaque — never touch it) |
