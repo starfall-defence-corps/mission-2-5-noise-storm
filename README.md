@@ -73,6 +73,8 @@ source venv/bin/activate
 +---------------------------------------------------------------+
 ```
 
+> ⚠️ **Addressing differs from Module 1**: here `sdc-app` holds `.11`/`2221` and `sdc-web` sits at `.12`/`2222` — check the diagram before reusing Module-1 muscle memory.
+
 The three fleet nodes are yours to harden. `sdc-noise` is the storm — opaque range
 infrastructure that probes the fleet and publishes what it can still reach. You
 defend the fleet; ARIA reads the storm's own telemetry to score you.
