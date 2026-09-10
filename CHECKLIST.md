@@ -1,7 +1,7 @@
 # Mission 2.5: Noise Storm — Progress Tracker
 
 **Rank**: Lieutenant
-**Arc**: Incident Response — Act 1 of 2 (Act 2 is Mission 2.6: Counterattack)
+**Arc**: Incident Response — Act 1 of 2 (Act 2 is [Mission 2.6: Counterattack](https://github.com/starfall-defence-corps/mission-2-6-counterattack))
 
 Check each item off as you complete it. Run `make test` after each phase — it
 re-scores all five. If a phase is blocked, see `docs/HINTS.md`. For a clean scored
@@ -61,3 +61,5 @@ run from the top, `make reset` first.
 
 - [ ] `make test` — all five phases pass, storm defeated
 - [ ] `make submit` — work submitted for ARIA review
+
+**Next stop**: [Mission 2.6 — Counterattack](https://github.com/starfall-defence-corps/mission-2-6-counterattack)
