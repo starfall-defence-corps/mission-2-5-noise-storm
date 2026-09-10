@@ -127,7 +127,7 @@ skipped and `make test` still works locally.
 
 ## Troubleshooting
 
-**Containers won't start**: Ensure Docker Desktop is running; check for port conflicts on 2221-2223 (only one SDC lab can run at a time — `make destroy` in any other mission first).
+**Containers won't start**: Ensure Docker Desktop is running; check for port conflicts on 2221-2223. Only one SDC lab at a time is supported — run `make destroy` in any other mission first.
 
 **`make test` says the range is offline / INCONCLUSIVE**: `make reset`.
 
