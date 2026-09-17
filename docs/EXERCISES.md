@@ -192,7 +192,7 @@ run_once: true
 become: false
 ```
 
-on your `ansible.builtin.template` task, targeting `templates/noise-report.md.j2` → `reports/noise-report.md`. To build a fleet-wide picture inside that single render, use `hostvars` and `groups['fleet']` in the template — see `workspace/templates/noise-report.md.j2` for the TODO markers showing where the prime suspect and per-node breakdown belong.
+on your `ansible.builtin.template` task, targeting `templates/noise-report.md.j2` → `{{ playbook_dir }}/reports/noise-report.md`. Using `{{ playbook_dir }}` pins the report to `workspace/reports/` (where ARIA looks for it) no matter which directory you run from. To build a fleet-wide picture inside that single render, use `hostvars` and `groups['fleet']` in the template — see `workspace/templates/noise-report.md.j2` for the TODO markers showing where the prime suspect and per-node breakdown belong.
 
 ### Step 3.4 — Run It
 
