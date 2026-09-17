@@ -8,18 +8,7 @@ DOCUMENT: EXERCISES — Phase-by-Phase Operational Instructions
 
 Complete each phase in sequence. Run `make test` after each phase. Do not advance until ARIA confirms compliance.
 
-**Two directories, two purposes:**
-
-- **Ansible commands** (`ansible`, `ansible-playbook`): Run from `workspace/` where `ansible.cfg` lives.
-- **Make commands** (`make test`, `make reset`): Run from the **project root** (where the `Makefile` lives).
-
-When a phase says "Run ARIA's Verification", return to the project root first:
-
-```bash
-cd ..        # from workspace/ back to project root
-make test
-cd workspace # return to workspace for the next phase
-```
+**One directory for everything**: run every command in this mission — `ansible ...` and `make ...` — from the **project root** (the folder with the `Makefile`). An `ansible.cfg` lives both there and in `workspace/`, so Ansible works from either; the steps below assume the project root throughout.
 
 **A note on `make test`**: unlike a simple pass/fail check, `make test` exercises **all five phases every time** — including running your own `block-ioc.yml` against the fleet, and, once you reach it, triggering the Storm's address rotation for Phase 5. This means `make test` mutates the live lab. If you want a clean, freshly scored run from Phase 1 onward, run `make reset` first — it re-arms the Storm on its primary address and clears any firewall state from prior runs.
 
@@ -70,9 +59,8 @@ You are not attacking anything in this mission — you are defending. The Storm 
 Take a look at what's already scaffolded for you:
 
 ```bash
-cd workspace
-cat site.yml
-ls roles/
+cat workspace/site.yml
+ls workspace/roles/
 ```
 
 `site.yml` applies three roles — `hardening`, `defense`, and `observability` — to the whole fleet. Each role's `tasks/main.yml` is a TODO stub. You will fill them in as you work through the phases below.
@@ -115,10 +103,10 @@ Open `workspace/roles/hardening/tasks/main.yml` and replace the TODO task. You w
 
 ### Step 1.3 — Apply It
 
-From `workspace/`:
+From the project root:
 
 ```bash
-ansible-playbook site.yml
+ansible-playbook workspace/site.yml
 ```
 
 This applies all three roles fleet-wide, including your Phase 1 work. It is safe to run repeatedly — Phases 2 and 3 will simply report "replace me" until you fill them in too.
@@ -159,13 +147,11 @@ Open `workspace/roles/defense/tasks/main.yml` and replace the TODO task(s). You 
 ### Step 2.3 — Apply and Verify
 
 ```bash
-ansible-playbook site.yml
+ansible-playbook workspace/site.yml
 ```
 
 ```bash
-cd ..
 make test
-cd workspace
 ```
 
 **This phase's check can be slow.** ARIA is waiting for the ban to actually trip against a live, continuous attack, then confirming it holds. `make test` for Phase 2 can take up to 2-3 minutes — that is expected, not a failure.
@@ -210,16 +196,16 @@ on your `ansible.builtin.template` task, targeting `templates/noise-report.md.j2
 
 ### Step 3.4 — Run It
 
-From `workspace/`:
+From the project root:
 
 ```bash
-ansible-playbook collect-triage.yml
+ansible-playbook workspace/collect-triage.yml
 ```
 
 Check the result:
 
 ```bash
-cat reports/noise-report.md
+cat workspace/reports/noise-report.md
 ```
 
 Confirm it actually names an IP address in the `172.30.0.0/24` range — that is your evidence for Phase 4.
@@ -239,13 +225,11 @@ Fill in `workspace/roles/observability/tasks/main.yml` to configure rsyslog on e
 ### Step 3.6 — Apply and Verify
 
 ```bash
-ansible-playbook site.yml
+ansible-playbook workspace/site.yml
 ```
 
 ```bash
-cd ..
 make test
-cd workspace
 ```
 
 ARIA checks that your triage report exists and names the Storm's *current* live IOC, and that an uncommented rsyslog forward rule is present on every node.
@@ -276,15 +260,13 @@ Replace the TODO task in `workspace/block-ioc.yml`.
 You know the live IOC from your Phase 3 triage report. Run your playbook against it manually before ARIA does:
 
 ```bash
-ansible-playbook block-ioc.yml -e ioc_ip=<the-ip-from-your-report>
+ansible-playbook workspace/block-ioc.yml -e ioc_ip=<the-ip-from-your-report>
 ```
 
 ### Step 4.4 — Run ARIA's Verification
 
 ```bash
-cd ..
 make test
-cd workspace
 ```
 
 For this phase, **ARIA runs your own `block-ioc.yml`** against the Storm's live source IP, then checks that the Storm's `web_open` signal falls to `False` on all three nodes. If you only banned port 22 in Phase 2, this phase will show you why that was not enough.
@@ -308,16 +290,14 @@ There is no new deliverable for this phase if Phase 4 was built the way the brie
 Go back to `workspace/block-ioc.yml` and remove the hardcoded address — it must come only from `{{ ioc_ip }}`. If you need to discover the Storm's new address to sanity-check your fix yourself, regenerate your triage report:
 
 ```bash
-ansible-playbook collect-triage.yml
-cat reports/noise-report.md
+ansible-playbook workspace/collect-triage.yml
+cat workspace/reports/noise-report.md
 ```
 
 ### Step 5.3 — Run ARIA's Final Verification
 
 ```bash
-cd ..
 make test
-cd workspace
 ```
 
 ARIA checks that, with the Storm now on its rotated address, `web_open` is `False` on all three nodes.

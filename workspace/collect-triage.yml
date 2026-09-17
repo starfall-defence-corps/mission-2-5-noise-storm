@@ -1,6 +1,6 @@
 # collect-triage.yml — gather the storm's fingerprints and render a report.
 #
-# Run:     ansible-playbook collect-triage.yml
+# Run:     ansible-playbook workspace/collect-triage.yml
 # Output:  reports/noise-report.md   (ARIA reads this in Phase 3)
 #
 # The report must name the storm's CURRENT source IP — and the only way to know

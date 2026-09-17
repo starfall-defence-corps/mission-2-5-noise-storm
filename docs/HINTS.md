@@ -107,7 +107,7 @@ If you only ever changed something for Phase 2 (fail2ban), that rule is scoped t
 Run `block-ioc.yml` against the IP from your own triage report before `make test` gets there. If it fails to apply cleanly (missing `-e ioc_ip=...`, a typo in the module args), you'll get a much clearer error message running it yourself than parsing it out of ARIA's output.
 
 ```bash
-ansible-playbook block-ioc.yml -e ioc_ip=172.30.0.20
+ansible-playbook workspace/block-ioc.yml -e ioc_ip=172.30.0.20
 ```
 
 Then confirm the rule landed:
@@ -131,8 +131,8 @@ It's easy to test Phase 4 successfully with `-e ioc_ip=172.30.0.20`, see it pass
 Regenerate your triage report against the live (now-rotated) fleet:
 
 ```bash
-ansible-playbook collect-triage.yml
-cat reports/noise-report.md
+ansible-playbook workspace/collect-triage.yml
+cat workspace/reports/noise-report.md
 ```
 
 This will show you the Storm's current source IP directly from fresh evidence, which is useful for sanity-checking your fix even though ARIA supplies the address itself when it re-runs your playbook.
@@ -160,7 +160,7 @@ make reset
 This re-arms the Storm on its **primary** address (172.30.0.20) and clears prior firewall state, while preserving everything you've written in `workspace/`.
 
 **"make: *** No targets specified" or "make: *** No rule to make target".**
-You are in the wrong directory. `make` commands must be run from the **project root**, where the `Makefile` lives — not from `workspace/`. Run `cd ..` to go back.
+You've `cd`ed into `workspace/`. Every command in this mission — `make` and `ansible-playbook` alike — runs from the **project root**, where the `Makefile` lives. Run `cd ..` to go back.
 
 **If `make test` fails:**
 Read ARIA's error message carefully — it names the specific signal it expected (`password_auth_offered`, `tcp_open`, `web_open`) versus what it observed, and which phase that maps to. Fix that one thing, then run `make test` again rather than reworking everything at once.
@@ -172,5 +172,5 @@ That directory is the range itself — the Storm's container, the target-node im
 1. `docker ps` — are all three fleet containers (and the noise container) running?
 2. `make ssh-app` / `make ssh-web` / `make ssh-db` — can you still reach each node with your key?
 3. On the node, check the specific service for the phase you're on: `sshd -T`, `fail2ban-client status sshd`, `sudo iptables -L -n`, `systemctl status rsyslog`.
-4. `cat reports/noise-report.md` — does it name a real, current IP?
+4. `cat workspace/reports/noise-report.md` — does it name a real, current IP?
 5. If nothing above explains it, `make reset` and re-test from a known-clean state.
