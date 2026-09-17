@@ -1,7 +1,7 @@
 # collect-triage.yml — gather the storm's fingerprints and render a report.
 #
-# Run:     ansible-playbook collect-triage.yml
-# Output:  reports/noise-report.md   (ARIA reads this in Phase 3)
+# Run:     ansible-playbook workspace/collect-triage.yml
+# Output:  workspace/reports/noise-report.md   (ARIA reads this in Phase 3)
 #
 # The report must name the storm's CURRENT source IP — and the only way to know
 # it is to look at the live fleet. Do not hand-write the address.
@@ -17,6 +17,8 @@
       ansible.builtin.debug:
         msg: "Replace me: collect and tally SSH offenders from auth.log."
 
-    # TODO: render templates/noise-report.md.j2 into reports/noise-report.md,
-    # using the evidence you gathered. Render once, on the control node:
+    # TODO: render templates/noise-report.md.j2 into
+    # "{{ playbook_dir }}/reports/noise-report.md" — playbook_dir pins the
+    # output to workspace/reports/ regardless of your current directory.
+    # Use the evidence you gathered. Render once, on the control node:
     #   delegate_to: localhost   run_once: true   become: false

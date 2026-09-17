@@ -40,7 +40,7 @@ if [ $EXIT_CODE -eq 0 ]; then
     echo -e "  ARIA: All objectives verified."
     echo -e "  Mission 2.5 status: COMPLETE"
     echo -e ""
-    echo -e "  Cadet, you held the line through the storm."
+    echo -e "  Lieutenant, you held the line through the storm."
     echo -e "  The fleet is hardened, watched, and the intruder"
     echo -e "  is locked out — even after they changed address."
     echo -e "  The Starfall Defence Corps salutes you."
