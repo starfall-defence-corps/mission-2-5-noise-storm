@@ -1,6 +1,6 @@
 # block-ioc.yml — firewall-drop a single IOC across the whole fleet.
 #
-# Run:  ansible-playbook block-ioc.yml -e ioc_ip=172.30.0.20
+# Run:  ansible-playbook workspace/block-ioc.yml -e ioc_ip=172.30.0.20
 #
 # ARIA runs THIS playbook against the storm's live source IP in Phase 4, and
 # again against a ROTATED source IP in Phase 5. It must be parameterised on
