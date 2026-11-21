@@ -94,6 +94,8 @@ make ssh-db     SSH into sdc-db   (172.30.0.13, also runs nginx :80)
 make submit     Submit your work for ARIA review (branch, commit, push, PR)
 ```
 
+> **Note:** `make submit` uses the [GitHub CLI](https://cli.github.com/) — install `gh` and run `gh auth login` once before your first submission.
+
 ## Mission Files
 
 | File | Purpose |
